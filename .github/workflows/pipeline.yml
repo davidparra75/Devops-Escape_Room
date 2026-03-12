@@ -1,0 +1,26 @@
+name: Escape Room CI
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t escape-room .
+
+      - name: Run container
+        run: docker run -d -p 8000:8000 escape-room
